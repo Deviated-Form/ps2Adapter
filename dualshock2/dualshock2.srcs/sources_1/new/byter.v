@@ -11,10 +11,9 @@ module byter(
 	// define module parameters
 	// states
 	localparam POLL     = 3'b000,
-			   CONFENTR = 3'b001,
-			   CONFANAL = 3'b010,
-			   CONFPRES = 3'b011,
-			   CONFEXIT = 3'b100;
+	           CONFENTR = 3'b001,
+	           CONFANAL = 3'b010,
+	           CONFEXIT = 3'b011;
 
 	// Register initializing
 	reg [7:0] allBytes [4:0][20:0]; // 3d array, 5 states by 16 different bytes 8bit Registers
@@ -27,7 +26,7 @@ module byter(
 	initial begin
 		// Poll
 		allBytes [3'b000]  [0] = 8'h01; // always first byte
-		allBytes [3'b000]  [1] = 8'h42; // Command Byte
+		allBytes [3'b000]  [1] = 8'h42; // Polling
 		allBytes [3'b000]  [2] = 8'h00; // always third byte
 		// Default Filler Bytes
 		allBytes [3'b000]  [3] = 8'h00;

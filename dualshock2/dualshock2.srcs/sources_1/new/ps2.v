@@ -61,11 +61,11 @@ module ps2 #(parameter CLK_DIV = 9)(
 			end
 			
 			PAUSE: begin
-				sclkNext = sclkNow + 1'b1;              // increment clock counter
+				sclkNext = sclkNow + 1'b1;            // increment clock counter
 				nextByteNext = 1'b0;
-				if (sclkNow == {CLK_DIV{1'b1}}) begin   // if clock is full (about to rise)
-					sclkNext = 0;                       // reset to 0
-					stateNext = TRANSFER;               // change state
+				if (sclkNow == {CLK_DIV{1'b1}}) begin // if clock is full (about to rise)
+					sclkNext = 0;                     // reset to 0
+					stateNext = TRANSFER;             // change state
 				end
 			end
 			
@@ -74,34 +74,34 @@ module ps2 #(parameter CLK_DIV = 9)(
 				nextByteNext = 1'b0;
 				dataByteNext = 8'b00000000;
 
-				if (sclkNow == 0) begin       // if clock counter is 0
+				if (sclkNow == 0) begin     // if clock counter is 0
 					cmdBitNext = byteNow[0];  // output the LSB of data
 				end else if (sclkNow == {{1'b0},{CLK_DIV-1{1'b1}}}) begin  // else if it's half full (about to rise)
-					byteNext = {ctrData, byteNow[7:1]};           // read in data (shift in)
+					byteNext = {ctrData, byteNow[7:1]}; // read in data (shift in)
 
 				end else if (sclkNow == {CLK_DIV{1'b1}}-1) begin  // else if it's full (about to fall) (minus one, so one before and not during)
-					counterNext = counterNow + 1'b1;              // increment bit counter
+					counterNext = counterNow + 1'b1;  // increment bit counter
 
 					if (counterNow == 3'b111) begin // if we are on the last bit
-						stateNext = WAITACK;        // change state
-						sclkNext = 0;               // set it to half full (after rising)
-						counterNext = 3'b000;       // reset counter
+						stateNext = WAITACK;  // change state
+						sclkNext = 0;         // set it to half full (after rising)
+						counterNext = 3'b000; // reset counter
 					end
 				end
 			end
 
 			WAITACK: begin
-				sclkNext = sclkNow + 1'b1;              // increment clock counter
+				sclkNext = sclkNow + 1'b1;  // increment clock counter
 				dataByteNext = byteNow;
 
 				if (sclkNow == {CLK_DIV{1'b1}}-1) begin // if it's full (about to fall) (minus one, so one before and not during)
-					counterNext = counterNow + 1'b1;    // increment bit counter
+					counterNext = counterNow + 1'b1;      // increment bit counter
 					sclkNext = 0;
 
 					if (counterNow == 3'b111) begin     // if we are on the last bit
-						stateNext = IDLE;               // change state
-						dataByteNext = byteNow;         // output data byte
-						nextByteNext = 1'b1;            // signal data is valid
+						stateNext = IDLE;       // change state
+						dataByteNext = byteNow; // output data byte
+						nextByteNext = 1'b1;    // signal data is valid
 					end
 				end
 			end
@@ -123,13 +123,13 @@ module ps2 #(parameter CLK_DIV = 9)(
 			nextByteNow <= 1'b0;
 
 		end else begin
-			counterNow      <= counterNext;
-			byteNow         <= byteNext;
-			sclkNow         <= sclkNext;
-			cmdBitNow       <= cmdBitNext;
-			stateNow        <= stateNext;
-			dataByteNow     <= dataByteNext;
-			nextByteNow     <= nextByteNext;
+			counterNow  <= counterNext;
+			byteNow     <= byteNext;
+			sclkNow     <= sclkNext;
+			cmdBitNow   <= cmdBitNext;
+			stateNow    <= stateNext;
+			dataByteNow <= dataByteNext;
+			nextByteNow <= nextByteNext;
 
 		end
 	end
