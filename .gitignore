@@ -7,3 +7,4 @@
 !/dualshock2/dualshock2.srcs
 /dualshock2/.stignore
 /dualshock2/.stfolder/
+**/*.dcp

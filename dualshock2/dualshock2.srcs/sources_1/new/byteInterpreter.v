@@ -8,7 +8,7 @@ module byteInterpreter (
 	output reg select, l3, r3, start,
 	output reg up, right, left, down,
 	output reg l2, r2, l1, r1,
-	output reg triangle, O, X, square,
+	output reg triangle, circle, X, square,
 	output reg [7:0] rightX, rightY,
 	output reg [7:0] leftX, leftY
 );
@@ -29,15 +29,15 @@ module byteInterpreter (
 					left     = ctrData[7];
 				end
 
-				// byte.bit  5.0  5.1  5.2  5.3  5.4       5.5  5.6  5.7
-				// button    L2   R2   L1   R1   Triangle  O    X    Square
+				// byte.bit  5.0  5.1  5.2  5.3  5.4       5.5     5.6  5.7
+				// button    L2   R2   L1   R1   Triangle  circle  X    Square
 				4: begin
 					l2       = ctrData[0];
 					r2       = ctrData[1];
 					l1       = ctrData[2];
 					r1       = ctrData[3];
 					triangle = ctrData[4];
-					O        = ctrData[5];
+					circle   = ctrData[5];
 					X        = ctrData[6];
 					square   = ctrData[7];
 				end
