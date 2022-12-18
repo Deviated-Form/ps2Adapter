@@ -22,9 +22,9 @@ module ledRGB (
 	end
 
 
-	assign lX = {leftX,  2'b00 } > ledCounter;
-	assign lY = {leftY,  2'b00 } > ledCounter;
-	assign rX = {rightX, 2'b00 } > ledCounter;
-	assign rY = {rightY, 2'b00 } > ledCounter;
+	assign lX = {2'b00,  leftX} > ledCounter;
+	assign lY = {2'b00,  leftY} > ledCounter;
+	assign rX = {2'b00, rightX} > ledCounter;
+	assign rY = {2'b00, rightY} > ledCounter;
 
 endmodule

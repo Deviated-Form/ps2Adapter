@@ -47,10 +47,9 @@ module ledTest(
 	assign ledR = ( lX &&  debug2 )
 	            | ( rX && ~debug2 );
 
-	assign ledG = 0;
+	assign ledG = ( rY && ~debug2 );
 
-	assign ledB = ( lY &&  debug2 )
-	            | ( rY && ~debug2 );
+	assign ledB = ( lY &&  debug2 );
 
 	ledRGB rgb_inst (
 		sysClk,
